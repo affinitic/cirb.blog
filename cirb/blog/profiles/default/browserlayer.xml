@@ -1,0 +1,4 @@
+<layers>
+    <layer name="cirb.blog"
+           interface="cirb.blog.browser.interfaces.ILayer" />
+</layers>
