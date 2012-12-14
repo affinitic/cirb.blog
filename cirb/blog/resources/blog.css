@@ -1,3 +1,6 @@
+.template-cirb_blog_view #content{
+	font-size: 90%;
+}
 .template-cirb_blog_view #content .entry-header{
 	position: relative;
 }
@@ -13,3 +16,8 @@
 .template-cirb_blog_view #content .entry-title{
 	padding-right: 80px;
 }
+.template-cirb_blog_view #content .documentFirstHeading,
+.template-cirb_blog_view #viewlet-below-content-title{
+	display: none;
+}
+

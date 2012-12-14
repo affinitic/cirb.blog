@@ -9,6 +9,7 @@
     i18n_domain="cirb.blog">
 
   <include package="plone.app.contentmenu" />
+  <include package="Products.CMFCore" file="permissions.zcml"/>
 
   <i18n:registerTranslations directory="locales" />
 
@@ -37,6 +38,14 @@
       class=".blog_view.BlogView"
       layer=".layer.ILayer"
       permission="zope2.View"
+      />
+
+  <browser:page
+      for="*"
+      name="cirb_blog_setup"
+      class=".setup.SetupView"
+      layer=".layer.ILayer"
+      permission="cmf.ModifyPortalContent"
       />
 
 </configure>

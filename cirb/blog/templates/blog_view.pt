@@ -1,12 +1,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" lang="en" metal:use-macro="context/main_template/macros/master"
   i18n:domain="cirb.blog">
 <body>
-  <div metal:fill-slot="content">
-    <tal:main-macro metal:define-macro="content">
+  <tal:contentcore metal:fill-slot="content-core">
+    <tal:main-macro metal:define-macro="content-core">
 
-
-      <div id="content" tal:repeat="entry view/get_articles">
-
+  <tal:articles tal:repeat="entry view/get_articles">
     <article tal:attributes="id entry/id; class entry/class; lang entry/lang; xml:lang entry/lang">
       <header class="entry-header">
         <h1 class="entry-title">
@@ -49,15 +47,15 @@
         <span class="comments-link"><a tal:attributes="href string:${entry/url}#commenting; title entry/title;" rel="bookmark"><span class="leave-reply" i18n:translate="">Leave a reply</span></a></span>
       </footer>
     </article>
-<script type="text/javascript" tal:content="string:
-$('#${entry/id}').truncate(${view/truncate_length}, {
-  more: '${view/translated_more_on} ${entry/title}',
-  less: '${view/translated_less_on} ${entry/title}'
-});">
-</script>
-      </div>
+		<script type="text/javascript" tal:content="string:
+		$('#${entry/id} .article-content').truncate(${view/truncate_length}, {
+		  more: '${view/translated_more_on} ${entry/title}',
+		  less: '${view/translated_less_on} ${entry/title}'
+		});">
+		</script>
+  </tal:articles>
 
     </tal:main-macro>
-  </div>
+  </tal:contentcore>
 </body>
 </html>
