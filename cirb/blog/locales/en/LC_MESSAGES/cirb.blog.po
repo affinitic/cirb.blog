@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: cirb.blog\n"
-"POT-Creation-Date: 2010-11-10 11:05+0000\n"
+"POT-Creation-Date: 2012-12-14 13:26+0000\n"
 "PO-Revision-Date: 2008-02-04 18:00+0000\n"
 "Last-Translator: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
 "Language-Team: Plone i18n <plone-i18n@lists.sourceforge.net>\n"
@@ -14,3 +14,42 @@ msgstr ""
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: cirb.blog\n"
+
+#: ./i18n.py:9
+#: ./templates/blog_view.pt:47
+msgid "Leave a reply"
+msgstr ""
+
+#: ./i18n.py:6
+#: ./templates/blog_view.pt:32
+msgid "Posted in"
+msgstr ""
+
+#: ./i18n.py:10
+#: ./templates/blog_view.pt:14
+msgid "Posted on"
+msgstr ""
+
+#: ./i18n.py:12
+#: ./templates/blog_view.pt:24
+msgid "Reply"
+msgstr ""
+
+#: ./i18n.py:8
+#: ./templates/blog_view.pt:40
+msgid "Tagged"
+msgstr ""
+
+#: ./blog_view.py:80
+msgid "View all posts from"
+msgstr ""
+
+#: ./i18n.py:7
+msgid "View all posts in "
+msgstr ""
+
+#: ./i18n.py:11
+#: ./templates/blog_view.pt:18
+msgid "by"
+msgstr ""
+

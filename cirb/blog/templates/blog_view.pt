@@ -1,4 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" lang="en" metal:use-macro="context/main_template/macros/master" i18n:domain="plone">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" lang="en" metal:use-macro="context/main_template/macros/master"
+  i18n:domain="cirb.blog">
 <body>
   <div metal:fill-slot="content">
     <tal:main-macro metal:define-macro="content">
@@ -10,18 +11,17 @@
           <a tal:attributes="href string:${entry/url}; title entry/title;" rel="bookmark" tal:content="entry/title"></a>
         </h1>
         <div class="entry-meta">
-          <span class="sep">Posted on </span>
+          <span class="sep" i18n:translate="">Posted on</span>
           <a tal:attributes="href string:${entry/url};" title="date" rel="bookmark">
             <time class="entry-date timeago" tal:attributes="datetime entry/datetime" pubdate="" tal:content="entry/datetime_human">2012/12/11</time>
           </a>
-          <span class="by-author"> <span class="sep"> by </span> 
-            <span class="author vcard">
-              <a class="url fn n" tal:attributes="href entry/author/url; title string:${view/translated_view_by} ${entry/author/fullname}" rel="author" tal:content="entry/author/fullname">Eric Auquiere</a>
-            </span>
-          </span>
+          <span class="by-author" i18n:translate="">by</span>
+           <span class="author vcard">
+             <a class="url fn n" tal:attributes="href entry/author/url; title string:${view/translated_view_by} ${entry/author/fullname}" rel="author" tal:content="entry/author/fullname">Eric Auquiere</a>
+           </span>
         </div>
         <div class="comments-link">
-           <a tal:attributes="href string:${entry/url}/#commenting; title entry/title"><span class="leave-reply">Reply</span></a>
+           <a tal:attributes="href string:${entry/url}/#commenting; title entry/title"><span class="leave-reply" i18n:translate="">Reply</span></a>
         </div>
       </header>
       <div class="article-image" tal:condition="entry/image_tag"><img class="image-left" tal:attributes="alt entry/image_alt; src string:${entry/url}/image_thumb"/></div>
