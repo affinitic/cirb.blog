@@ -3,6 +3,10 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from plone import api
 
+from cirb.blog import i18n
+
+_ = i18n._
+
 
 class BlogView(BrowserView):
     """CIRB Blog View class"""
@@ -16,6 +20,7 @@ class BlogView(BrowserView):
     def update(self):
         self.users = {}
         self.articles = []
+        self.portal_url = api.portal.get().absolute_url()
         brains = None
         if self.context.portal_type not in ('Topic', 'Collection'):
             catalog = getToolByName(self.context, 'portal_catalog')
@@ -35,6 +40,13 @@ class BlogView(BrowserView):
         user = self.get_user(brain.Creator)
         effdate = ob.getEffectiveDate()
         localized_dt = api.portal.get_localized_time(datetime=effdate)
+
+        image_tag = ""
+        image_field = ob.getField("image")
+        if image_field.get_size(ob) != 0:
+            scale = "thumb"  # 128:128
+            image_tag = image_field.tag(ob, scale=scale)
+
         return {'url': brain.getURL(),
                 'id': brain.UID,
                 'class': 'post-X tag-X',
@@ -44,6 +56,10 @@ class BlogView(BrowserView):
                 'author': user,
                 'datetime': brain.EffectiveDate,
                 'datetime_human': localized_dt,
+                'tags': brain.Subject,
+                'categories': [],
+                'image_tag': image_tag,
+                'image_alt': ob.getImageCaption(),
                 }
 
     def get_user(self, username):
@@ -54,6 +70,12 @@ class BlogView(BrowserView):
                 fullname = username
             user_info = {'fullname': fullname,
                          'email': user.email,
-                         'username': username}
+                         'username': username,
+                         'url': '%s/author/%s' % (self.portal_url,
+                                                  username)}
             self.users[username] = user_info
         return self.users[username]
+
+    def translated_view_by(self):
+        msgid = _(u"View all posts from")
+        return self.context.translate(msgid)

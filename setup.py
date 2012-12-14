@@ -34,7 +34,7 @@ setup(name='cirb.blog',
           'collective.configviews',
           'collective.recaptcha',
           'plone.formwidget.recaptcha',
-          'collective.cleanupzodb',
+          'collective.contentrules.yearmonth',
           # -*- Extra requirements: -*-
       ],
       extras_require=dict(
