@@ -24,6 +24,11 @@
   <!-- browser layer -->
   <interface interface=".layer.ILayer" name="cirb.blog" />
 
+  <browser:resourceDirectory
+    name="cirb.blog"
+    directory="resources"
+    />
+
   <browser:page
       for="*"
       name="cirb_blog_view"

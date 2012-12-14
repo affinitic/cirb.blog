@@ -1,9 +1,11 @@
+from zope import component
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFCore.utils import getToolByName
 from plone import api
 
 from cirb.blog import i18n
+from plone.registry.interfaces import IRegistry
 
 _ = i18n._
 
@@ -20,7 +22,11 @@ class BlogView(BrowserView):
     def update(self):
         self.users = {}
         self.articles = []
+        self.portal_registry = component.getUtility(IRegistry)
         self.portal_url = api.portal.get().absolute_url()
+        self.portal_state = component.getMultiAdapter((self.context,
+                                                       self.request),
+                                                  name="plone_portal_state")
         brains = None
         if self.context.portal_type not in ('Topic', 'Collection'):
             catalog = getToolByName(self.context, 'portal_catalog')
@@ -31,6 +37,12 @@ class BlogView(BrowserView):
             brains = self.context.queryCatalog()
         if brains and not self.articles:
             self.articles = map(self._map_article_to_dic, brains)
+
+        key = 'cirb.blog.settings.truncate_length'
+        if key in self.portal_registry:
+            self.truncate_length = self.portal_registry[key]
+        else:
+            self.truncate_length = '1000'
 
     def get_articles(self):
         return self.articles
@@ -47,6 +59,12 @@ class BlogView(BrowserView):
             scale = "thumb"  # 128:128
             image_tag = image_field.tag(ob, scale=scale)
 
+        lang = ""
+        if ob.Language():
+            lang = ob.Language()
+        else:
+            lang = self.portal_state.language()
+
         return {'url': brain.getURL(),
                 'id': brain.UID,
                 'class': 'post-X tag-X',
@@ -60,6 +78,7 @@ class BlogView(BrowserView):
                 'categories': [],
                 'image_tag': image_tag,
                 'image_alt': ob.getImageCaption(),
+                'lang': lang,
                 }
 
     def get_user(self, username):
@@ -78,4 +97,12 @@ class BlogView(BrowserView):
 
     def translated_view_by(self):
         msgid = _(u"View all posts from")
+        return self.context.translate(msgid)
+
+    def translated_more_on(self):
+        msgid = _(u"Read more on")
+        return self.context.translate(msgid)
+
+    def translated_less_on(self):
+        msgid = _(u"Hide")
         return self.context.translate(msgid)

@@ -1,0 +1,15 @@
+.template-cirb_blog_view #content .entry-header{
+	position: relative;
+}
+.template-cirb_blog_view #content .entry-header a{
+    border-bottom: none;
+}
+.template-cirb_blog_view #content .entry-header .comments-link{
+	position: absolute;
+	right: 0;
+	top: 10px;
+}
+.template-cirb_blog_view #content .entry-meta,
+.template-cirb_blog_view #content .entry-title{
+	padding-right: 80px;
+}
