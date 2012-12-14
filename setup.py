@@ -31,6 +31,10 @@ setup(name='cirb.blog',
           'Products.Scrawl',
           'collective.wpadmin',
           'plone.app.discussion',
+          'collective.configviews',
+          'collective.recaptcha',
+          'plone.formwidget.recaptcha',
+          'collective.cleanupzodb',
           # -*- Extra requirements: -*-
       ],
       extras_require=dict(

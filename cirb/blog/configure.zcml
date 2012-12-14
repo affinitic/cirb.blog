@@ -1,5 +1,6 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:cmf="http://namespaces.zope.org/cmf"
     xmlns:i18n="http://namespaces.zope.org/i18n"
@@ -7,7 +8,7 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="cirb.blog">
 
-  <include package=".browser" />
+  <include package="plone.app.contentmenu" />
 
   <i18n:registerTranslations directory="locales" />
 
@@ -15,9 +16,22 @@
       name="default"
       title="cirb.blog"
       directory="profiles/default"
-      description='Extension profile'
+      description="Extension profile"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       />
   <include file="upgrades.zcml" />
+
+  <!-- browser layer -->
+  <interface interface=".layer.ILayer" name="cirb.blog" />
+
+  <browser:page
+      for="*"
+      name="cirb_blog_view"
+      menu="plone_displayviews"
+      title="CIRB Blog view"
+      class=".blog_view.BlogView"
+      layer=".layer.ILayer"
+      permission="zope2.View"
+      />
 
 </configure>

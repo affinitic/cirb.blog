@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" lang="en" metal:use-macro="context/main_template/macros/master" i18n:domain="plone">
+<body>
+  <div metal:fill-slot="content">
+    <tal:main-macro metal:define-macro="content">
+      <tal:articles tal:repeat="entry view/get_articles">
+
+    <article tal:attributes="id entry/id; class entry/class">
+      <header class="entry-header">
+        <h1 class="entry-title">
+          <a tal:attributes="href string:${entry/url}; title entry/title;" rel="bookmark" tal:content="entry/title"></a>
+        </h1>
+        <div class="entry-meta">
+          <span class="sep">Posted on </span>
+          <a tal:attributes="href string:${entry/url};" title="date" rel="bookmark">
+            <time class="entry-date timeago" tal:attributes="datetime entry/datetime" pubdate="" tal:content="entry/datetime_human">2012/12/11</time>
+          </a>
+          <span class="by-author"> <span class="sep"> by </span> 
+            <span class="author vcard">
+              <a class="url fn n" href="/author/eauquiere/" title="View all posts by Eric Auquiere" rel="author" tal:content="entry/author/fullname">Eric Auquiere</a>
+            </span>
+          </span>
+        </div>
+        <div class="comments-link">
+           <a href="/plone-est-il-le-meilleur-cms/#respond" title="Comment on Plone est-il le meilleur CMS ?"><span class="leave-reply">Reply</span></a>           
+        </div>
+      </header>
+
+      <div class="entry-content" tal:content="structure entry/body"></div>
+
+      <footer class="entry-meta">
+          <span class="entry-utility-prep entry-utility-prep-cat-links">Posted in</span> <a href="/category/technology/" title="View all posts in Technology" rel="category tag">Technology</a>
+          <span class="sep"> | </span>
+          <span class="tag-links">
+            <span class="entry-utility-prep entry-utility-prep-tag-links">Tagged</span> <a href="/tag/cms/" rel="tag">cms</a>, <a href="/tag/plone/" rel="tag">plone</a>
+          </span>
+          <span class="sep"> | </span>
+          <span class="comments-link"><a href="/plone-est-il-le-meilleur-cms/#respond" title="Comment on Plone est-il le meilleur CMS ?"><span class="leave-reply">Leave a reply</span></a></span>
+      </footer>
+    </article>
+
+      </tal:articles>
+    </tal:main-macro>
+  </div>
+</body>
+</html>
