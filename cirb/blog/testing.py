@@ -14,4 +14,3 @@ INTEGRATION = IntegrationTesting(bases=(FIXTURE,),
 
 FUNCTIONAL = FunctionalTesting(bases=(FIXTURE,),
                         name="cirb.blog:Functional")
-
