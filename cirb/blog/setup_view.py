@@ -12,6 +12,7 @@ from plone.contentrules.engine.interfaces import IRuleStorage,\
     IRuleAssignmentManager
 from plone.app.contentrules.rule import Rule, get_assignments
 from plone.contentrules.engine.assignments import RuleAssignment
+from Products.CMFCore.interfaces._events import IActionSucceededEvent
 
 logger = logging.getLogger("cirb.blog")
 YEARMONTH_RULE = 'collective.contentrules.yearmonth.actions.Move'
@@ -77,9 +78,17 @@ class SetupView(BrowserView):
     def initialize_archive_rule(self):
         #create the rule
         storage = getUtility(IRuleStorage)
-        if 'archive' not in storage:
-            storage['archive'] = Rule()
-        rule = self.portal.restrictedTraverse('++rule++archive')
+        RULE_ID = 'archive-%s' % self.context.getId()
+        if RULE_ID not in storage:
+            storage[RULE_ID] = Rule()
+        rule = storage.get(RULE_ID)
+        rule.title = "Archive %s" % self.context.Title()
+        rule.enabled = True
+        # Clear out conditions and actions since we're expecting new ones
+        del rule.conditions[:]
+        del rule.actions[:]
+        rule.event = IActionSucceededEvent
+        rule = rule.__of__(self.portal)
 
         #add action
         action = getUtility(IRuleAction, name=YEARMONTH_RULE)
@@ -98,6 +107,9 @@ class SetupView(BrowserView):
 
         #activate "archive" rule on context
         assignable = IRuleAssignmentManager(self.context)
-        if 'archive' not in assignable:
-            assignable['archive'] = RuleAssignment('archive')
-        get_assignments(storage['archive']).insert(target)
+
+        assignment = assignable.get(RULE_ID, None)
+        if not assignment:
+            assignment = assignable[RULE_ID] = RuleAssignment(RULE_ID)
+        assignment.enabled = True
+        get_assignments(storage[RULE_ID]).insert(target)
