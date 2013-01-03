@@ -4,10 +4,12 @@ from zope import interface
 from plone.app import testing
 from cirb.blog import testing
 
+
 class UnitTestCase(unittest.TestCase):
 
     def setUp(self):
         pass
+
 
 class IntegrationTestCase(unittest.TestCase):
 

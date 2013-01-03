@@ -28,7 +28,7 @@ setup(name='cirb.blog',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'Products.Scrawl',
+#          'Products.Scrawl',
           'collective.wpadmin',
           'plone.app.discussion',
           'collective.configviews',
