@@ -13,10 +13,9 @@ from plone.contentrules.engine.interfaces import IRuleStorage,\
 from plone.app.contentrules.rule import Rule, get_assignments
 from plone.contentrules.engine.assignments import RuleAssignment
 from Products.CMFCore.interfaces._events import IActionSucceededEvent
+from zope.lifecycleevent.interfaces import IObjectAddedEvent
 
 logger = logging.getLogger("cirb.blog")
-YEARMONTH_RULE = 'collective.contentrules.yearmonth.actions.Move'
-CONDITION1 = 'plone.conditions.WorkflowTransition'
 
 
 class SetupView(BrowserView):
@@ -28,7 +27,7 @@ class SetupView(BrowserView):
         self.add_media_folder()
         self.add_default_page()
         self.mark()
-        self.initialize_archive_rule()
+        self.initialize_archive_rules()
         self.request.response.redirect(self.context.absolute_url())
 
     def update(self):
@@ -75,41 +74,76 @@ class SetupView(BrowserView):
         if not IBlogContainer.providedBy(self.context):
             interface.directlyProvides(self.context, IBlogContainer)
 
-    def initialize_archive_rule(self):
-        #create the rule
-        storage = getUtility(IRuleStorage)
+    def initialize_archive_rules(self):
         RULE_ID = 'archive-%s' % self.context.getId()
-        if RULE_ID not in storage:
-            storage[RULE_ID] = Rule()
-        rule = storage.get(RULE_ID)
-        rule.title = "Archive %s" % self.context.Title()
+        rule = self._create_rule(RULE_ID,
+                                 "Archive %s" % self.context.Title(),
+                                 IActionSucceededEvent)
+
+        #add condition & action
+        data = {'wf_transitions': ['publish']}
+        self._add_rule_condition(rule,
+                                 'plone.conditions.WorkflowTransition',
+                                 data)
+
+        target = '/'.join(self.context.getPhysicalPath())
+        data = {'target_folder': target}
+        self._add_rule_action(rule,
+                              'collective.contentrules.yearmonth.actions.Move',
+                              data)
+
+        #activate it on context
+        self._activate_rule(RULE_ID)
+
+        #create rule to publish archive folder
+        publish_rule = self._create_rule("publish-archive-folder",
+                                         "Publish yearmonth archive folders",
+                                         IObjectAddedEvent)
+
+        data = {'check_types': ['Folder']}
+        self._add_rule_condition(publish_rule,
+                                 'plone.conditions.PortalType',
+                                 data)
+        data = {'transition': 'publish'}
+        self._add_rule_action(publish_rule, "plone.actions.Workflow", data)
+        self._activate_rule("publish-archive-folder")
+
+    def _add_rule_condition(self, rule, condition_id, data):
+        condition = getUtility(IRuleCondition, name=condition_id)
+        adding = getMultiAdapter((rule, self.request), name='+condition')
+        addview = getMultiAdapter((adding, self.request),
+                                  name=condition.addview)
+        addview.createAndAdd(data=data)
+
+    def _add_rule_action(self, rule, action_id, data):
+        action = getUtility(IRuleAction, name=action_id)
+        adding = getMultiAdapter((rule, self.request), name='+action')
+        addview = getMultiAdapter((adding, self.request),
+                                  name=action.addview)
+        addview.createAndAdd(data=data)
+
+    def _create_rule(self, rule_id, title, event):
+        storage = getUtility(IRuleStorage)
+        if rule_id not in storage:
+            storage[rule_id] = Rule()
+        rule = storage.get(rule_id)
+        rule.title = title
         rule.enabled = True
         # Clear out conditions and actions since we're expecting new ones
         del rule.conditions[:]
         del rule.actions[:]
-        rule.event = IActionSucceededEvent
+        rule.event = event
         rule = rule.__of__(self.portal)
+        return rule
 
-        #add action
-        action = getUtility(IRuleAction, name=YEARMONTH_RULE)
-        adding = getMultiAdapter((rule, self.request), name='+action')
-        addview = getMultiAdapter((adding, self.request),
-                                  name=action.addview)
-        target = '/'.join(self.context.getPhysicalPath())
-        addview.createAndAdd(data={'target_folder': target})
-
-        #add condition
-        condition = getUtility(IRuleCondition, name=CONDITION1)
-        adding = getMultiAdapter((rule, self.request), name='+condition')
-        addview = getMultiAdapter((adding, self.request),
-                                  name=condition.addview)
-        addview.createAndAdd(data={'wf_transitions': ['publish']})
-
-        #activate "archive" rule on context
-        assignable = IRuleAssignmentManager(self.context)
-
-        assignment = assignable.get(RULE_ID, None)
+    def _activate_rule(self, rule_id, context=None):
+        if context is None:
+            context = self.context
+        storage = getUtility(IRuleStorage)
+        rule = storage.get(rule_id)
+        assignable = IRuleAssignmentManager(context)
+        assignment = assignable.get(rule_id, None)
         if not assignment:
-            assignment = assignable[RULE_ID] = RuleAssignment(RULE_ID)
+            assignment = assignable[rule_id] = RuleAssignment(rule_id)
         assignment.enabled = True
-        get_assignments(storage[RULE_ID]).insert(target)
+        get_assignments(rule).insert('/'.join(self.context.getPhysicalPath()))
