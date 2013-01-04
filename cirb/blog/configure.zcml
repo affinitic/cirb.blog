@@ -49,4 +49,12 @@
       permission="cmf.ModifyPortalContent"
       />
 
+  <browser:page
+      for="*"
+      name="cirb_blog_isblog"
+      class=".is_blog.IsBlog"
+      layer=".layer.ILayer"
+      permission="zope2.View"
+      />
+
 </configure>
