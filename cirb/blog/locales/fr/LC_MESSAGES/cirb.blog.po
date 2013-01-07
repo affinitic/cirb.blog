@@ -43,7 +43,7 @@ msgstr "Lire la suite de"
 #: ./i18n.py:12
 #: ./templates/blog_view.pt:26
 msgid "Reply"
-msgstr "Répondre"
+msgstr "Commenter"
 
 #: ./i18n.py:8
 #: ./templates/blog_view.pt:42
