@@ -48,9 +48,10 @@
       </footer>
     </article>
 		<script type="text/javascript" tal:content="string:
-		$('#${entry/id} .article-content').truncate(${view/truncate_length}, {
-		  more: '${view/translated_more_on} ${entry/title}',
-		  less: '${view/translated_less_on} ${entry/title}'
+		$(document).ready(function() {
+            $('#${entry/id} .article-content').truncate(${view/truncate_length}, {
+		  more: '${view/translated_more_on} ${entry/title}'
+		  });
 		});">
 		</script>
   </tal:articles>
