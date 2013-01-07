@@ -16,4 +16,8 @@
      <value key="public_key">6LelrswSAAAAAPtLT6wF-k6osiGr85FJXB7Qdn6r</value>
      <value key="private_key">6LelrswSAAAAADbdRkJHKOhprZCjFcCfrdI9BHSA</value>
    </records>
+ <records interface="plone.app.discussion.interfaces.IDiscussionSettings">
+   <value key="anonymous_email_enabled">True</value>
+ </records>
+
 </registry>
