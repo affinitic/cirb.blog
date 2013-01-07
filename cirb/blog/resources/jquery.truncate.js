@@ -2,12 +2,11 @@
   $.fn.truncate = function(length, options) {
     options = jQuery.extend( {
       more: 'more',
-      less: 'less',
       elipsis: '...'
     }, options);
 
-    function moreLessLink() {
-      return '<p><a class="more_less" href="#">' + options.more + '</a></p>';
+    function moreLink() {
+      return '<p><a href="#">' + options.more + '</a></p>';
     }
 
     function stripEmptyTags(str) {
@@ -25,8 +24,8 @@
           str = origStr.split(htmlRegex).join('');
       if(str.length < length)
         return;
-      var truncateAt = length, tags = {}, match = null, end = origStr.length, classes = $(el).attr('class') || 'truncate', 
-          wrap = $(el).wrap('<div></div>').attr('class', '').parent().attr('class', classes);
+      var truncateAt = length, tags = {}, match = null, end = origStr.length, classes = $(el).attr('class') || 'truncate';
+      //$(el).wrap('<div></div>').attr('class', '').parent().attr('class', classes);
       if(str.charCodeAt(truncateAt) != 32) {
         var nextSpaceIndex = str.substring(truncateAt).indexOf(' ');
         if(nextSpaceIndex < 0)
@@ -44,14 +43,10 @@
 
       truncated = stripEmptyTags(truncated).replace(/(<\/\w+>)?$/, options.elipsis + '$1');
 
-      $(el).clone().addClass('more').appendTo(wrap).hide().parent().append(moreLessLink());
-      $(el).addClass('less').html(truncated).parent().
-      find('.more_less').
-      click(function(e) {
-        e.preventDefault();
-        $('.more, .less', wrap).toggle();
-        $(this).html($('.more', wrap).is(':visible') ? options.less : options.more);
-      });
+      $(el).parent().append(moreLink());
+      $(el).addClass('less').html(truncated);
+      var articleurl = $(el).parent().parent().find('h1 a').attr('href');
+      $(el).parent().find('a').attr('href', articleurl);
     });
   };
 })(jQuery);
