@@ -11,6 +11,19 @@
 	position: absolute;
 	right: 0;
 	top: 10px;
+	height: 55px;
+	width: 55px;
+	line-height: 55px; /*center the text*/
+	text-align: center;
+	background: url('++resource++cirb.blog/discussion_icon.png');
+	background-repeat: no-repeat;
+	-moz-background-size: 100% 80%;           /* Gecko 1.9.2 (Firefox 3.6) */
+         -o-background-size: 100% 100%;           /* Opera 9.5 */
+    -webkit-background-size: 100% 100%;           /* Safari 3.0 */
+            background-size: 100% 100%;
+}
+.template-cirb_blog_view #content .entry-header .comments-link a{
+	display: block;
 }
 .template-cirb_blog_view #content .entry-meta,
 .template-cirb_blog_view #content .entry-title{

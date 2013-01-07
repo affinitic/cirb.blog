@@ -6,6 +6,7 @@ from plone import api
 
 from cirb.blog import i18n
 from plone.registry.interfaces import IRegistry
+from plone.app.discussion.interfaces import IConversation
 
 _ = i18n._
 
@@ -65,6 +66,8 @@ class BlogView(BrowserView):
         else:
             lang = self.portal_state.language()
 
+        conversation = IConversation(ob)
+
         return {'url': brain.getURL(),
                 'id': brain.UID,
                 'class': 'post-X tag-X',
@@ -79,6 +82,7 @@ class BlogView(BrowserView):
                 'image_tag': image_tag,
                 'image_alt': ob.getImageCaption(),
                 'lang': lang,
+                'total_comments': conversation.total_comments,
                 }
 
     def get_user(self, username):

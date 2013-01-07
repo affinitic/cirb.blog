@@ -12,12 +12,17 @@
     <value key="moderator_email"></value>
     <value key="user_notification_enabled">False</value>
    </records>
-   <records interface="plone.formwidget.recaptcha.interfaces.IReCaptchaSettings">
-     <value key="public_key">6LelrswSAAAAAPtLT6wF-k6osiGr85FJXB7Qdn6r</value>
-     <value key="private_key">6LelrswSAAAAADbdRkJHKOhprZCjFcCfrdI9BHSA</value>
+   <records interface="plone.app.discussion.interfaces.IDiscussionSettings">
+     <value key="anonymous_email_enabled">True</value>
    </records>
- <records interface="plone.app.discussion.interfaces.IDiscussionSettings">
-   <value key="anonymous_email_enabled">True</value>
- </records>
+
+   <record name="collective.portlet.socialnetworks">
+       <value>
+         <element>facebook|https://www.facebook.com/cirbcibg</element>
+         <element>twitter|https://twitter.com/cirb_cibg</element>
+         <element>linkedin|http://www.linkedin.com/company/cirb_cibg</element>
+         <element>youtube|http://www.youtube.com/user/CIRBCIBG</element>
+       </value>
+   </record>
 
 </registry>

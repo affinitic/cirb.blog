@@ -21,7 +21,7 @@
            </span>
         </div>
         <div class="comments-link">
-           <a tal:attributes="href string:${entry/url}/#commenting; title entry/title"><span class="leave-reply" i18n:translate="">Reply</span></a>
+           <a tal:attributes="href string:${entry/url}/#commenting; title entry/title"><span class="leave-reply" tal:content="entry/total_comments"></span></a>
         </div>
       </header>
       <div class="article-image" tal:condition="entry/image_tag"><img class="image-left" tal:attributes="alt entry/image_alt; src string:${entry/url}/image_thumb"/></div>
@@ -47,15 +47,14 @@
         <span class="comments-link"><a tal:attributes="href string:${entry/url}#commenting; title entry/title;" rel="bookmark"><span class="leave-reply" i18n:translate="">Leave a reply</span></a></span>
       </footer>
     </article>
-		<script type="text/javascript" tal:content="string:
-		$(document).ready(function() {
-            $('#${entry/id} .article-content').truncate(${view/truncate_length}, {
-		  more: '${view/translated_more_on} ${entry/title}'
-		  });
-		});">
-		</script>
+    <script type="text/javascript" tal:content="string:
+$(document).ready(function() {
+  $('#${entry/id} .article-content').truncate(${view/truncate_length}, {
+    more: '${view/translated_more_on} ${entry/title}'
+  });
+});">
+    </script>
   </tal:articles>
-
     </tal:main-macro>
   </tal:contentcore>
 </body>

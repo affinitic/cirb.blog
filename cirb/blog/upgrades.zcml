@@ -4,7 +4,7 @@
 
     <upgradeStep
         source="*"
-        destination="1009"
+        destination="1010"
         title="Upgrade"
         description=""
         profile="cirb.blog:default"

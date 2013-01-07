@@ -10,5 +10,4 @@ Dependencies
 * collective.contentrules.yearmonth
 * collective.recaptcha
 * plone.formwidget.recaptcha
-* Products.Scrawl
 * collective.configviews

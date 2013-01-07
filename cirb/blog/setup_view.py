@@ -87,26 +87,15 @@ class SetupView(BrowserView):
                                  data)
 
         target = '/'.join(self.context.getPhysicalPath())
-        data = {'target_folder': target}
+        data = {'target_folder': target,
+                'folderish_type': 'Folder',
+                'transitions': ["publish"]}
         self._add_rule_action(rule,
                               'collective.contentrules.yearmonth.actions.Move',
                               data)
 
         #activate it on context
         self._activate_rule(RULE_ID)
-
-        #create rule to publish archive folder
-        publish_rule = self._create_rule("publish-archive-folder",
-                                         "Publish yearmonth archive folders",
-                                         IObjectAddedEvent)
-
-        data = {'check_types': ['Folder']}
-        self._add_rule_condition(publish_rule,
-                                 'plone.conditions.PortalType',
-                                 data)
-        data = {'transition': 'publish'}
-        self._add_rule_action(publish_rule, "plone.actions.Workflow", data)
-        self._activate_rule("publish-archive-folder")
 
     def _add_rule_condition(self, rule, condition_id, data):
         condition = getUtility(IRuleCondition, name=condition_id)
