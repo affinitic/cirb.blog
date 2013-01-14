@@ -28,13 +28,13 @@ setup(name='cirb.blog',
       zip_safe=False,
       install_requires=[
           'setuptools',
-#          'Products.Scrawl',
-          'collective.wpadmin',
           'plone.app.discussion',
-          'collective.configviews',
-          'collective.recaptcha',
           'plone.formwidget.recaptcha',
+          'collective.configviews',
           'collective.contentrules.yearmonth',
+          'collective.recaptcha',
+          'collective.virtualtreecategories',
+          'collective.wpadmin',
           # -*- Extra requirements: -*-
       ],
       extras_require=dict(

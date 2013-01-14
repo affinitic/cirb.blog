@@ -16,7 +16,7 @@
  <property name="allow_discussion">True</property>
  <property name="default_view">newsitem_view</property>
  <property name="view_methods">
-  <element value="blogentry_view"/>
+  <element value="newsitem_view"/>
  </property>
  <property name="default_view_fallback">False</property>
  <alias from="(Default)" to="(dynamic view)"/>
