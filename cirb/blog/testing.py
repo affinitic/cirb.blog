@@ -1,5 +1,6 @@
-from plone.app.testing import PloneWithPackageLayer, IntegrationTesting, FunctionalTesting
+from plone.app.testing import *
 import cirb.blog
+
 
 FIXTURE = PloneWithPackageLayer(zcml_filename="configure.zcml",
                                 zcml_package=cirb.blog,

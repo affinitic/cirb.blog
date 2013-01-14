@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<metadata>
+  <version>1000</version>
+  <dependencies>
+    <dependency>profile-:default</dependency>
+    <dependency>profile-collective.categories:default</dependency>
+    <dependency>profile-collective.diggdigg:default</dependency>
+    <dependency>profile-collective.portlet.oembed:default</dependency>
+    <dependency>profile-collective.portlet.twittermultistream:default</dependency>
+    <dependency>profile-collective.portlet.socialnetworks:default</dependency>
+    <dependency>profile-eea.tags:default</dependency>
+    <dependency>profile-Products.ATVocabularyManager:default</dependency>
+    <dependency>profile-Products.LinguaPlone:default</dependency>
+  </dependencies>
+</metadata>

@@ -1,0 +1,15 @@
+<registry>
+  <records interface="collective.wpadmin.settings.WPAdminSettings">
+    <value key="blog_type">Blog Entry</value>
+  </records>
+
+  <record name="collective.portlet.socialnetworks">
+       <value>
+         <element>facebook|https://www.facebook.com/cirbcibg</element>
+         <element>twitter|https://twitter.com/cirb_cibg</element>
+         <element>linkedin|http://www.linkedin.com/company/cirb_cibg</element>
+         <element>youtube|http://www.youtube.com/user/CIRBCIBG</element>
+       </value>
+  </record>
+
+</registry>
