@@ -13,7 +13,7 @@ class FakeContext(object):
         self._modified = "modified date"
         self.language = "fr"
         self.portal_type = "Topic"
-        self.text = "text"
+        self.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
         self.image_caption = "image caption"
 
     def getId(self):

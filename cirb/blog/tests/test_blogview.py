@@ -26,6 +26,7 @@ class TestBlogView(base.UnitTestCase):
         self.blogview.update()
         self.blogview.update()
         self.assertEqual(self.blogview.truncate_length, '1001')
+        self.assertEqual(len(self.blogview.articles), 2)
 
 
 class IntegrationTestBlogView(base.IntegrationTestCase):
