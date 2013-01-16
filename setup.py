@@ -33,7 +33,6 @@ setup(name='cirb.blog',
           'collective.configviews',
           'collective.contentrules.yearmonth',
           'collective.recaptcha',
-          'collective.virtualtreecategories',
           'collective.wpadmin',
           # -*- Extra requirements: -*-
       ],
