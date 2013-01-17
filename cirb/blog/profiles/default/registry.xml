@@ -15,5 +15,7 @@
    <records interface="plone.app.discussion.interfaces.IDiscussionSettings">
      <value key="anonymous_email_enabled">True</value>
    </records>
-
+   <records interface="collective.wpadmin.settings.WPAdminSettings">
+     <value key="blog_type">Blog Entry</value>
+   </records>
 </registry>

@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>1010</version>
+  <version>1012</version>
   <dependencies>
     <dependency>profile-collective.quickupload:default</dependency>
+    <dependency>profile-plone.formwidget.recaptcha:default</dependency>
   </dependencies>
 </metadata>
