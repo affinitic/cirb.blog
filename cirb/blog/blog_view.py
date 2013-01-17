@@ -22,6 +22,7 @@ class BlogView(BrowserView):
         self.request = request
         self.users = {}
         self.articles = []
+        self.portal_url = None
         self.portal_registry = None
         self.portal_state = None
         self.truncate_length = None
