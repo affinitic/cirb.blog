@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0a2 (unreleased)
+1.0a2 (2013-01-17)
 ------------------
 
 - fix setup view content rule creation (issue was on the target_root_folder)
