@@ -12,6 +12,19 @@ Dependencies
 * plone.formwidget.recaptcha
 * collective.configviews
 
+How to use
+==========
+
+You just have to add a folder in your website and call the @@cirb_blog_setup
+view to turn this folder into a blog.
+
+Next you have to configure your collection query:
+
+* criteria: content type: Blog Entry
+* criteria: review state: published
+* sort on: effective date (reverse)
+
+
 Credits
 =======
 
