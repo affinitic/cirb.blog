@@ -27,12 +27,15 @@ class BlogView(BrowserView):
         self.portal_state = None
         self.truncate_length = None
         self.has_api = None
+        self.context_url = None
 
     def __call__(self):
         self.update()
         return self.index()
 
     def update(self):
+        if self.context_url is None:
+            self.context_url = self.context.absolute_url()
         if self.has_api is None:
             self.has_api = True
         if self.portal_registry is None:
