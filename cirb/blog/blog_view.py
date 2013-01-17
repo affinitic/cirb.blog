@@ -7,7 +7,6 @@ from plone import api
 from cirb.blog import i18n
 from plone.registry.interfaces import IRegistry
 from plone.app.discussion.interfaces import IConversation
-from zope.component.interfaces import ComponentLookupError
 
 _ = i18n._
 
