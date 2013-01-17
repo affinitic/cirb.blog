@@ -14,6 +14,7 @@ from plone.app.contentrules.rule import Rule, get_assignments
 from plone.contentrules.engine.assignments import RuleAssignment
 from Products.CMFCore.interfaces._events import IActionSucceededEvent
 from zope.lifecycleevent.interfaces import IObjectAddedEvent
+from plone.api.exc import InvalidParameterError
 
 logger = logging.getLogger("cirb.blog")
 
@@ -63,10 +64,16 @@ class SetupView(BrowserView):
         api.content.transition(obj=media, transition='publish')
 
     def create_collection(self):
-        collection = api.content.create(type='Collection',
-                                  title='Blog',
-                                  id="blog",
-                                  container=self.context)
+        try:
+            collection = api.content.create(type='Collection',
+                                      title='Blog',
+                                      id="blog",
+                                      container=self.context)
+        except InvalidParameterError:
+            collection = api.content.create(type='Topic',
+                                      title='Blog',
+                                      id="blog",
+                                      container=self.context)
         api.content.transition(obj=collection, transition='publish')
         return collection
 
