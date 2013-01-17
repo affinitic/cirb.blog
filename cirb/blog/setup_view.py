@@ -1,7 +1,8 @@
 import logging
 
+from zope import component
 from zope import interface
-from zope.component import getUtility, getMultiAdapter
+from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
 from plone import api
@@ -13,7 +14,6 @@ from plone.contentrules.engine.interfaces import IRuleStorage,\
 from plone.app.contentrules.rule import Rule, get_assignments
 from plone.contentrules.engine.assignments import RuleAssignment
 from Products.CMFCore.interfaces._events import IActionSucceededEvent
-from zope.lifecycleevent.interfaces import IObjectAddedEvent
 from plone.api.exc import InvalidParameterError
 
 logger = logging.getLogger("cirb.blog")
@@ -94,32 +94,37 @@ class SetupView(BrowserView):
                                  data)
 
         target = '/'.join(self.context.getPhysicalPath())
-        data = {'target_folder': target,
+        pstate = component.getMultiAdapter((self.context, self.request),
+                                           name=u"plone_portal_state")
+        root_path = pstate.navigation_root_path()
+        target_path = target[len(root_path):]
+        data = {'target_root_folder': target_path,
                 'folderish_type': 'Folder',
                 'transitions': ["publish"]}
-        self._add_rule_action(rule,
-                              'collective.contentrules.yearmonth.actions.Move',
-                              data)
+        action = 'collective.contentrules.yearmonth.actions.Move'
+        self._add_rule_action(rule, action, data)
 
         #activate it on context
         self._activate_rule(RULE_ID)
 
     def _add_rule_condition(self, rule, condition_id, data):
-        condition = getUtility(IRuleCondition, name=condition_id)
-        adding = getMultiAdapter((rule, self.request), name='+condition')
-        addview = getMultiAdapter((adding, self.request),
+        condition = component.getUtility(IRuleCondition, name=condition_id)
+        adding = component.getMultiAdapter((rule, self.request),
+                                           name='+condition')
+        addview = component.getMultiAdapter((adding, self.request),
                                   name=condition.addview)
         addview.createAndAdd(data=data)
 
     def _add_rule_action(self, rule, action_id, data):
-        action = getUtility(IRuleAction, name=action_id)
-        adding = getMultiAdapter((rule, self.request), name='+action')
-        addview = getMultiAdapter((adding, self.request),
+        action = component.getUtility(IRuleAction, name=action_id)
+        adding = component.getMultiAdapter((rule, self.request),
+                                           name='+action')
+        addview = component.getMultiAdapter((adding, self.request),
                                   name=action.addview)
         addview.createAndAdd(data=data)
 
     def _create_rule(self, rule_id, title, event):
-        storage = getUtility(IRuleStorage)
+        storage = component.getUtility(IRuleStorage)
         if rule_id not in storage:
             storage[rule_id] = Rule()
         rule = storage.get(rule_id)
@@ -135,7 +140,7 @@ class SetupView(BrowserView):
     def _activate_rule(self, rule_id, context=None):
         if context is None:
             context = self.context
-        storage = getUtility(IRuleStorage)
+        storage = component.getUtility(IRuleStorage)
         rule = storage.get(rule_id)
         assignable = IRuleAssignmentManager(context)
         assignment = assignable.get(rule_id, None)
