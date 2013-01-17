@@ -18,4 +18,5 @@
    <records interface="collective.wpadmin.settings.WPAdminSettings">
      <value key="blog_type">Blog Entry</value>
    </records>
+
 </registry>

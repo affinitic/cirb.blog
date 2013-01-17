@@ -4,7 +4,7 @@ Changelog
 1.0a3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fix get_localized_time issue when datetime is None (effective date)
 
 
 1.0a2 (2013-01-17)

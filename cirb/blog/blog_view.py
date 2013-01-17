@@ -68,7 +68,7 @@ class BlogView(BrowserView):
         return self.articles
 
     def get_localized_time(self, datetime=None):
-        if self.has_api:
+        if self.has_api and datetime:
             return api.portal.get_localized_time(datetime=datetime)
 
     def _map_article_to_dic(self, brain):
