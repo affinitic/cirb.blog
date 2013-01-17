@@ -82,7 +82,8 @@ class SetupView(BrowserView):
             interface.directlyProvides(self.context, IBlogContainer)
 
     def initialize_archive_rules(self):
-        RULE_ID = 'archive-%s' % self.context.getId()
+        path_id = '-'.join(self.context.getPhysicalPath())
+        RULE_ID = 'archive%s' % path_id
         rule = self._create_rule(RULE_ID,
                                  "Archive %s" % self.context.Title(),
                                  IActionSucceededEvent)
@@ -96,7 +97,7 @@ class SetupView(BrowserView):
         target = '/'.join(self.context.getPhysicalPath())
         pstate = component.getMultiAdapter((self.context, self.request),
                                            name=u"plone_portal_state")
-        root_path = pstate.navigation_root_path()
+        root_path = '/'.join(pstate.portal().getPhysicalPath())
         target_path = target[len(root_path):]
         data = {'target_root_folder': target_path,
                 'folderish_type': 'Folder',

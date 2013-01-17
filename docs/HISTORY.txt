@@ -5,7 +5,8 @@ Changelog
 ------------------
 
 - fix get_localized_time issue when datetime is None (effective date)
-
+- remove collective.configviews from dependencies
+- Use archive-root-path-to-blog as rule id during the rule creation. Fix issue if you have multiple blog with same id. This can be the case if you use LinguaPlone with languages folder (/fr, /nl, ...)
 
 1.0a2 (2013-01-17)
 ------------------
