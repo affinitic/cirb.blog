@@ -9,8 +9,12 @@
     i18n_domain="cirb.blog">
 
   <include package="plone.app.contentmenu" />
+  <include package="plone.app.discussion" />
+  <include package="plone.formwidget.recaptcha" />
+  <include package="collective.wpadmin" />
+  <include package="collective.contentrules.yearmonth" />
   <include package="collective.quickupload" />
-  <include package="collective.configviews" />
+  <include package="collective.recaptcha" />
   <include package="Products.CMFCore" file="permissions.zcml"/>
 
   <interface interface=".interfaces.IBlogContainer" />

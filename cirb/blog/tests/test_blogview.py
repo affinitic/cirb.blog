@@ -1,4 +1,5 @@
 import unittest2 as unittest
+from pyquery import PyQuery
 from cirb.blog import testing
 from cirb.blog.tests import base, utils
 from cirb.blog.blog_view import BlogView
@@ -30,8 +31,20 @@ class TestBlogView(base.UnitTestCase):
 
 
 class IntegrationTestBlogView(base.IntegrationTestCase):
-    def test_isblog(self):
-        pass
+
+    def setUp(self):
+        super(IntegrationTestBlogView, self).setUp()
+        self.folder.restrictedTraverse('@@cirb_blog_setup').mark()
+        self.view = self.folder.blog.restrictedTraverse('@@cirb_blog_view')
+
+    def test_rendering(self):
+        self.request['ACTUAL_URL'] = self.folder.absolute_url()
+        render = self.view()
+        pq = PyQuery(render)
+        articles = pq('article')
+        self.assertEqual(len(articles), 1)
+        title = pq('article h1')[0].text_content().strip()
+        self.assertEqual(title, 'Test blog entry')
 
 
 def test_suite():

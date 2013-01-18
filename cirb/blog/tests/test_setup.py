@@ -28,6 +28,14 @@ class TestSetup(base.IntegrationTestCase):
         collection = portal_types['Topic']
         self.assertIn('cirb_blog_view', collection.view_methods)
 
+#    def test_setup_view(self):
+        #it fails and I don't understand why
+#        self.folder.restrictedTraverse('@@cirb_blog_setup')()
+#        ids = self.folder.objectIds()
+#        self.assertIn('media', ids)
+#        self.assertIn('blog', ids)
+        #TODO: check content rule as been created
+
 
 def test_suite():
     return unittest.defaultTestLoader.loadTestsFromName(__name__)

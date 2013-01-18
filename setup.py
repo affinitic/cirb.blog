@@ -31,12 +31,13 @@ setup(name='cirb.blog',
           'plone.app.discussion',
           'plone.formwidget.recaptcha',
           'collective.contentrules.yearmonth',
+          'collective.quickupload',
           'collective.recaptcha',
           'collective.wpadmin',
           # -*- Extra requirements: -*-
       ],
       extras_require=dict(
-          test=['plone.app.testing'],
+          test=['plone.app.testing', 'pyquery'],
       ),
       entry_points="""
       # -*- Entry points: -*-
