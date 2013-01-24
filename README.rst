@@ -24,6 +24,17 @@ Next you have to configure your collection query:
 * criteria: review state: published
 * sort on: effective date (reverse)
 
+Configuration
+==============
+
+Via the registry settings, you must complete a few entries:
+
+* collective portlet socialnetworks : (u'facebook|https://www.facebook.com/cirbcibg', 
+                                       u'twitter|https://twitter.com/cirb_cibg', 
+                                       u'linkedin|http://www.linkedin.com/company/cirb_cibg', 
+                                       u'youtube|http://www.youtube.com/user/CIRBCIBG')
+
+
 
 Credits
 =======
