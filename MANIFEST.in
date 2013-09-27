@@ -1,2 +1,10 @@
+include *.in
+include *.py
+include *.rst
+include *.zcml
+include buildout.cfg
+include project.cfg
+recursive-include docs *.txt
 recursive-include cirb *
+
 global-exclude *pyc
