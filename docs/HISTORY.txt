@@ -4,7 +4,7 @@ Changelog
 1.0a4 (2013-09-27)
 ------------------
 
-- Nothing changed yet.
+- Add registry for set language choice on collection.
 
 
 1.0a3 (2013-01-18)
