@@ -172,7 +172,10 @@ class BlogItemView(BrowserView):
         return "{}/author/{}".format(self.navigation_root_url, username)
 
     def get_datetime_human(self):
-        return api.portal.get_localized_time(datetime=self.effdate)
+        if self.effdate:
+            return api.portal.get_localized_time(datetime=self.effdate)
+        else:
+            return False
 
     def translated_view_by(self):
         msgid = _(u"View all posts from")

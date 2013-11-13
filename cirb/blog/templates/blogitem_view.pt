@@ -10,8 +10,10 @@
 <metal:content-title fill-slot="content-title">
     <h1 class="documentFirstHeading" tal:content="context/title"></h1>
     <div class="entry-meta">
-        <span class="sep" i18n:translate="">Posted on</span>
-        <time class="entry-date timeago" tal:attributes="datetime view/effdate" pubdate="" tal:content="view/get_datetime_human">2012/12/11</time>&nbsp;
+        <tal:block tal:condition='view/get_datetime_human'>
+            <span class="sep" i18n:translate="">Posted on</span>
+            <time class="entry-date timeago" tal:attributes="datetime view/effdate" pubdate="" tal:content="view/get_datetime_human">2012/12/11</time>&nbsp;
+        </tal:block>
         <span class="by-author" i18n:translate="">by</span>
         <span class="author vcard">
             <a class="url fn n" tal:attributes="href view/get_author_url; 
