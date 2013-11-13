@@ -49,6 +49,17 @@
 
   <browser:page
       for="*"
+      name="blogitem_view"
+      menu="plone_displayviews"
+      title="CIRB Blog Item view"
+      layer=".layer.ILayer"
+      class=".blog_view.BlogItemView"
+      permission="zope2.View"
+      />
+
+
+  <browser:page
+      for="*"
       name="cirb_blog_setup"
       class=".setup_view.SetupView"
       layer=".layer.ILayer"

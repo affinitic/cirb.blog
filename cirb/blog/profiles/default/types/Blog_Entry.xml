@@ -14,9 +14,9 @@
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types"/>
  <property name="allow_discussion">True</property>
- <property name="default_view">newsitem_view</property>
+ <property name="default_view">blogitem_view</property>
  <property name="view_methods">
-  <element value="newsitem_view"/>
+  <element value="blogitem_view"/>
  </property>
  <property name="default_view_fallback">False</property>
  <alias from="(Default)" to="(dynamic view)"/>

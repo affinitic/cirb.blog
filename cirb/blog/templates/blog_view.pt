@@ -1,4 +1,10 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" xmlns:i18n="http://xml.zope.org/namespaces/i18n" lang="en" metal:use-macro="context/main_template/macros/master"
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xml:lang="en" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
+      lang="en" 
+      metal:use-macro="context/main_template/macros/master"
   i18n:domain="cirb.blog">
 <body>
   <tal:contentcore metal:fill-slot="content-core">
@@ -17,7 +23,9 @@
           </a>
           <span class="by-author" i18n:translate="">by</span>
            <span class="author vcard">
-             <a class="url fn n" tal:attributes="href entry/author/url; title string:${view/translated_view_by} ${entry/author/fullname}" rel="author" tal:content="entry/author/fullname">Eric Auquiere</a>
+             <a class="url fn n" tal:attributes="href entry/author/url; 
+                                                 title string:${view/translated_view_by} ${entry/author/fullname}" 
+                                                 rel="author" tal:content="entry/author/fullname">Eric Auquiere</a>
            </span>
         </div>
         <div class="comments-link">

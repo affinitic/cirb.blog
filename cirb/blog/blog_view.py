@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from zope import component
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
@@ -22,6 +23,7 @@ class BlogView(BrowserView):
         self.users = {}
         self.articles = []
         self.portal_url = None
+        self.navigation_root_url = None
         self.portal_registry = None
         self.portal_state = None
         self.truncate_length = None
@@ -45,6 +47,8 @@ class BlogView(BrowserView):
             self.portal_state = component.getMultiAdapter((self.context,
                                                           self.request),
                                                   name="plone_portal_state")
+        if self.navigation_root_url is None:
+            self.navigation_root_url = self.portal_state.navigation_root_url()
         if not self.articles:
             brains = None
             if self.context.portal_type not in ('Topic', 'Collection'):
@@ -111,13 +115,13 @@ class BlogView(BrowserView):
     def get_user(self, username):
         if username not in self.users and username:
             user = api.user.get(username=username)
-            fullname = user.fullname
+            fullname = user.getProperty('fullname')
             if not fullname:
                 fullname = username
             user_info = {'fullname': fullname,
-                         'email': user.email,
+                         'email': user.getProperty('email'),
                          'username': username,
-                         'url': '%s/author/%s' % (self.portal_url,
+                         'url': '%s/author/%s' % (self.navigation_root_url,
                                                   username)}
             self.users[username] = user_info
         return self.users[username]
@@ -140,3 +144,36 @@ class BlogView(BrowserView):
             return conversation.total_comments
         except TypeError:
             return 0
+
+
+class BlogItemView(BrowserView):
+    template = ViewPageTemplateFile("templates/blogitem_view.pt")
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+        self.effdate = self.context.getEffectiveDate()
+        self.portal_state = component.getMultiAdapter((self.context,
+                                                          self.request),
+                                                  name="plone_portal_state")
+        self.navigation_root_url = self.portal_state.navigation_root_url()
+
+    def __call__(self):
+        return self.template()
+
+    def get_author_name(self):
+        username = self.context.Creator()
+        user = api.user.get(username=username)
+        name = user.getProperty('fullname')
+        return name
+
+    def get_author_url(self):
+        username = self.context.Creator()
+        return "{}/author/{}".format(self.navigation_root_url, username)
+
+    def get_datetime_human(self):
+        return api.portal.get_localized_time(datetime=self.effdate)
+
+    def translated_view_by(self):
+        msgid = _(u"View all posts from")
+        return self.context.translate(msgid)
