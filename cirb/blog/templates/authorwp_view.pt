@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xml:lang="en" 
+      xmlns:tal="http://xml.zope.org/namespaces/tal" 
+      xmlns:metal="http://xml.zope.org/namespaces/metal" 
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
+      lang="en" 
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="cirb.blog">
+<body>
+  <tal:contentcore metal:fill-slot="content-core">
+    <tal:main-macro metal:define-macro="content-core">
+
+    <h1><tal:block i18n:translate="by" />&nbsp;<tal:block tal:replace="request/author" /></h1>
+        <ul class="list_articles_by_author">
+            <li tal:repeat="article view/list_of_articles">
+            <a href="" tal:attributes="href article/absolute_url">
+                <div tal:content='article/title' />
+            </a>
+            <div tal:content='article/description' />
+            </li>
+        </ul>
+
+    </tal:main-macro>
+</tal:contentcore>
+</body>
+</html>
