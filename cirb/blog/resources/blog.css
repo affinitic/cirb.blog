@@ -33,4 +33,6 @@
 .template-cirb_blog_view #viewlet-below-content-title{
 	display: none;
 }
-
+.section-blog #category {
+    display: block;
+}
