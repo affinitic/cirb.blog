@@ -74,4 +74,13 @@
       permission="zope2.View"
       />
 
+  <browser:page
+      for="*"
+      name="authorwp"
+      class=".blog_view.AuthorWpView"
+      layer=".layer.ILayer"
+      permission="zope2.View"
+      />
+
+
 </configure>

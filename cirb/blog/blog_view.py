@@ -8,6 +8,8 @@ from plone import api
 from cirb.blog import i18n
 from plone.registry.interfaces import IRegistry
 from plone.app.discussion.interfaces import IConversation
+from zope.interface import implements
+from zope.publisher.interfaces import IPublishTraverse
 
 _ = i18n._
 
@@ -121,7 +123,7 @@ class BlogView(BrowserView):
             user_info = {'fullname': fullname,
                          'email': user.getProperty('email'),
                          'username': username,
-                         'url': '%s/author/%s' % (self.navigation_root_url,
+                         'url': '%s/authorwp/%s' % (self.navigation_root_url,
                                                   username)}
             self.users[username] = user_info
         return self.users[username]
@@ -169,7 +171,7 @@ class BlogItemView(BrowserView):
 
     def get_author_url(self):
         username = self.context.Creator()
-        return "{}/author/{}".format(self.navigation_root_url, username)
+        return "{}/authorwp/{}".format(self.navigation_root_url, username)
 
     def get_datetime_human(self):
         if self.effdate:
@@ -180,3 +182,29 @@ class BlogItemView(BrowserView):
     def translated_view_by(self):
         msgid = _(u"View all posts from")
         return self.context.translate(msgid)
+
+
+class AuthorWpView(BrowserView):
+    implements(IPublishTraverse)
+    template = ViewPageTemplateFile("templates/authorwp_view.pt")
+
+    def __call__(self):
+        return self.template()
+
+    def publishTraverse(self, request, name):
+        request.PARENTS.pop()
+        request.set("author", name)
+        return self()
+
+    def list_of_articles(self):
+        author = self.request.author
+        articles = []
+        portal_catalog = self.context.portal_catalog
+        brains = portal_catalog.searchResults({
+            'Creator': author,
+            'portal_type': 'Blog Entry',
+            'Language': All,
+            })
+        for brain in brains:
+            articles.append(brain.getObject())
+        return articles
