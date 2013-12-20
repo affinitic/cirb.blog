@@ -4,7 +4,7 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fix alt and title.
 
 
 1.0.2 (2013-11-13)
