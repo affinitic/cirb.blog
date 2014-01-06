@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.4 (unreleased)
+1.0.4 (2014-01-06)
 ------------------
 
 - Fix alt and title of img tag in cirb_blog_view.
