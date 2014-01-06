@@ -4,13 +4,15 @@ Changelog
 1.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix alt and title of img tag in cirb_blog_view.
+[gotcha]
 
 
 1.0.3 (2013-12-20)
 ------------------
 
-- fix alt and title.
+- Fix alt and title of img tag in blogitem_view.
+[gotcha]
 
 
 1.0.2 (2013-11-13)

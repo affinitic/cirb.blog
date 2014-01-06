@@ -32,7 +32,8 @@
            <a tal:attributes="href string:${entry/url}/#commenting; title entry/title"><span class="leave-reply" tal:content="entry/total_comments"></span></a>
         </div>
       </header>
-      <div class="article-image" tal:condition="entry/image_tag"><img class="image-left" tal:attributes="alt entry/image_alt; src string:${entry/url}/image_thumb"/></div>
+      <div class="article-image" tal:condition="entry/image_tag"
+        tal:content="structure entry/image_tag" />
       <div class="article-content" tal:content="structure entry/body"></div>
 
       <footer class="entry-meta">

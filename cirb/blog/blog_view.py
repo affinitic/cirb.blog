@@ -86,8 +86,13 @@ class BlogView(BrowserView):
         image_tag = ""
         image_field = ob.getField("image")
         if image_field and image_field.get_size(ob) != 0:
-            scale = "thumb"  # 128:128
-            image_tag = image_field.tag(ob, scale=scale)
+            image_caption = ob.getImageCaption()
+            image_tag = ob.tag(
+                css_class="image-left",
+                scale="thumb",  # 128:128
+                alt=image_caption,
+                title=image_caption,
+            )
 
         lang = ""
         if ob.Language():
