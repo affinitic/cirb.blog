@@ -208,7 +208,7 @@ class AuthorWpView(BrowserView):
         brains = portal_catalog.searchResults({
             'Creator': author,
             'portal_type': 'Blog Entry',
-            'Language': All,
+            'Language': 'all',
             })
         for brain in brains:
             articles.append(brain.getObject())
