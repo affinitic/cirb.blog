@@ -4,7 +4,7 @@ Changelog
 1.0.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Show author bio and homepage
 
 
 1.0.6 (2014-05-13)
