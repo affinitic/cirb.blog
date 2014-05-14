@@ -16,7 +16,7 @@
             Author name
         </h2>
 
-        <p condition="authorinfo/description" tal:content="authorinfo/description">
+        <p tal:condition="authorinfo/description" tal:content="authorinfo/description">
             Author description.
         </p>
 
