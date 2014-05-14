@@ -1,22 +1,63 @@
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xml:lang="en" 
-      xmlns:tal="http://xml.zope.org/namespaces/tal" 
-      xmlns:metal="http://xml.zope.org/namespaces/metal" 
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
-      lang="en" 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
       metal:use-macro="context/main_template/macros/master"
-      i18n:domain="cirb.blog">
+      i18n:domain="plone">
 <body>
   <tal:contentcore metal:fill-slot="content-core">
-    <tal:main-macro metal:define-macro="content-core">
+    <tal:main-macro metal:define-macro="content-core"
+                    tal:define="authorinfo view/get_author_info">
 
-    <h1><tal:block i18n:translate="by" />&nbsp;<tal:block tal:replace="request/author" /></h1>
+        <!-- Author information -->
+        <h2 tal:content="authorinfo/fullname">
+            Author name
+        </h2>
+
+        <p condition="authorinfo/description" tal:content="authorinfo/description">
+            Author description.
+        </p>
+
+        <div class="discreet">
+            <tal:location condition="authorinfo/location"
+                          i18n:translate="text_location">
+                Location:
+                <span tal:content="authorinfo/location"
+                      tal:omit-tag=""
+                      i18n:name="location">
+                    Some location
+                </span>
+            </tal:location>
+
+            <tal:language condition="authorinfo/language">
+                &mdash;
+                <span i18n:translate="label_main_language">Main Language:</span>
+                <span tal:replace="authorinfo/language">Some language</span>
+            </tal:language>
+        </div>
+
+        <div class="visualClear"><!-- --></div>
+
+        <p tal:condition="python: authorinfo['home_page']">
+            <a href="#"
+               rel="nofollow"
+               tal:attributes="href authorinfo/home_page"
+               i18n:translate="label_author_external_home_page">Author's external home page&hellip;</a>
+        </p>
+
+        <h2 i18n:translate="go_to_search_author_content">
+            All content created by
+            <span i18n:name="user" tal:omit-tag="" tal:content="authorinfo/fullname"/>&hellip;
+        </h2>
+
         <ul class="list_articles_by_author">
             <li tal:repeat="article view/list_of_articles">
-            <a href="" tal:attributes="href article/absolute_url">
-                <div tal:content='article/title' />
-            </a>
-            <div tal:content='article/description' />
+                <a href="" tal:attributes="href article/absolute_url">
+                    <div tal:content='article/title' />
+                </a>
+                <div tal:content='article/description' />
             </li>
         </ul>
 

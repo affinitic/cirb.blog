@@ -201,6 +201,11 @@ class AuthorWpView(BrowserView):
         request.set("author", name)
         return self()
 
+    def get_author_info(self):
+        author = self.request.author
+        mtool = getToolByName(self.context, 'portal_membership')
+        return mtool.getMemberInfo(author)
+
     def list_of_articles(self):
         author = self.request.author
         articles = []
