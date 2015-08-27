@@ -10,11 +10,18 @@
     }
 
     function stripEmptyTags(str) {
-      var emptyTagRegex = /<(\w+)[^>]*>\s*<\/\1>/g;
+      var emptyTagRegex = /<(\w+)[^>]*>\s*[<br>|<br/>|<br />]{0,}<\/\1>/g;
       str = str.replace(emptyTagRegex, '');
       if(emptyTagRegex.test(str))
         return stripEmptyTags(str);
       return str;
+    }
+
+    function stripTrailingBreakSpaces(str) {
+      console.log(str);
+      var regex = /[<br>|<br/>|<br />]{1,}(<\/\w+>)?$/;
+      console.log(regex.test(str));
+      return str.replace(regex, '');
     }
 
     return this.each(function(i, el) {
@@ -41,7 +48,8 @@
         truncated = [truncated.substring(0, tag), tags[tag], truncated.substring(tag)].join('');
       }
 
-      truncated = stripEmptyTags(truncated).replace(/(<\/\w+>)?$/, options.elipsis + '$1');
+      truncated = stripEmptyTags(truncated)
+      truncated = stripTrailingBreakSpaces(truncated).replace(/(<\/\w+>)?$/, options.elipsis + '$1');
 
       el.parent().append(moreLink());
       el.addClass('less').html(truncated);
