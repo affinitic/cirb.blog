@@ -8,6 +8,7 @@
 <body>
 
 <metal:content-title fill-slot="content-title">
+    <img src="" class="portrait" tal:attributes="src view/get_author_picture" />
     <h1 class="documentFirstHeading" tal:content="context/title"></h1>
     <div class="entry-meta" tal:condition="context/@@plone_portal_state/anonymous">
         <tal:block tal:condition='python:view.get_datetime_human()'>

@@ -15,6 +15,7 @@
         <h2 tal:content="authorinfo/fullname">
             Author name
         </h2>
+        <img src="" class="portrait" tal:attributes="src view/get_author_picture" />
 
         <p tal:condition="authorinfo/description" tal:content="authorinfo/description">
             Author description.

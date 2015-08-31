@@ -125,9 +125,11 @@ class BlogView(BrowserView):
             fullname = user.getProperty('fullname')
             if not fullname:
                 fullname = username
+            portrait = user.getPersonalPortrait(id=user.id)
             user_info = {'fullname': fullname,
                          'email': user.getProperty('email'),
                          'username': username,
+                         'picture': portrait.absolute_url(),
                          'url': '%s/authorwp/%s' % (self.navigation_root_url,
                                                   username)}
             self.users[username] = user_info
@@ -178,6 +180,11 @@ class BlogItemView(BrowserView):
         username = self.context.Creator()
         return "{}/authorwp/{}".format(self.navigation_root_url, username)
 
+    def get_author_picture(self):
+        username = self.context.Creator()
+        user = api.user.get(username=username)
+        return user.getPersonalPortrait(id=user.id).absolute_url()
+
     def get_datetime_human(self):
         if self.effdate:
             return api.portal.get_localized_time(datetime=self.effdate)
@@ -205,6 +212,11 @@ class AuthorWpView(BrowserView):
         author = self.request.author
         mtool = getToolByName(self.context, 'portal_membership')
         return mtool.getMemberInfo(author)
+
+    def get_author_picture(self):
+        username = self.context.Creator()
+        user = api.user.get(username=username)
+        return user.getPersonalPortrait(id=user.id).absolute_url()
 
     def list_of_articles(self):
         author = self.request.author

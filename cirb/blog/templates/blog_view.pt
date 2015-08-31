@@ -13,6 +13,7 @@
   <tal:articles tal:repeat="entry view/get_articles">
     <article tal:attributes="id entry/id; class entry/class; lang entry/lang; xml:lang entry/lang">
       <header class="entry-header">
+        <img src="" class="portrait" tal:attributes="src entry/author/picture" />
         <h1 class="entry-title">
           <a tal:attributes="href string:${entry/url}; title entry/title;" rel="bookmark" tal:content="entry/title"></a>
         </h1>
