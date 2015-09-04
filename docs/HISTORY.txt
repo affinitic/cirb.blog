@@ -4,7 +4,8 @@ Changelog
 1.0.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix the author picture on author page : #10
+  [mpeeters]
 
 
 1.0.8 (2015-08-31)
