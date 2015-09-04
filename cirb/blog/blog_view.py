@@ -214,7 +214,7 @@ class AuthorWpView(BrowserView):
         return mtool.getMemberInfo(author)
 
     def get_author_picture(self):
-        username = self.context.Creator()
+        username = self.request.author
         user = api.user.get(username=username)
         return user.getPersonalPortrait(id=user.id).absolute_url()
 
