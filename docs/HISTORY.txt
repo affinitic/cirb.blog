@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.10 (unreleased)
+1.0.10 (2016-03-10)
 -------------------
 
 - Avoid errors if a blog post user no longer exist in Plone : #33
