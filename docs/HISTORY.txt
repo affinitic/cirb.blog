@@ -4,7 +4,8 @@ Changelog
 1.0.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Avoid errors if a blog post user no longer exist in Plone : #33
+  [mpeeters]
 
 
 1.0.9 (2015-09-04)
