@@ -13,7 +13,8 @@
   <tal:articles tal:repeat="entry view/get_articles">
     <article tal:attributes="id entry/id; class entry/class; lang entry/lang; xml:lang entry/lang">
       <header class="entry-header">
-        <img src="" class="portrait" tal:attributes="src entry/author/picture" />
+        <img src="" class="portrait" tal:attributes="src entry/author/picture"
+                                     tal:condition="entry/author/picture"/>
         <h1 class="entry-title">
           <a tal:attributes="href string:${entry/url}; title entry/title;" rel="bookmark" tal:content="entry/title"></a>
         </h1>
@@ -24,9 +25,13 @@
           </a>
           <span class="by-author" i18n:translate="">by</span>
            <span class="author vcard">
-             <a class="url fn n" tal:attributes="href entry/author/url; 
-                                                 title string:${view/translated_view_by} ${entry/author/fullname}" 
+             <a class="url fn n" tal:attributes="href entry/author/url;
+                                                 title string:${view/translated_view_by} ${entry/author/fullname}"
+                                 tal:condition="entry/author/url"
                                                  rel="author" tal:content="entry/author/fullname">Eric Auquiere</a>
+              <span tal:content="entry/author/fullname"
+                    tal:condition="not: entry/author/url">
+              </span>
            </span>
         </div>
         <div class="comments-link">

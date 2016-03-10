@@ -119,19 +119,33 @@ class BlogView(BrowserView):
                 'total_comments': total_comments,
                 }
 
+    def get_default_user(self, username):
+        return {
+            'fullname': username,
+            'email': None,
+            'username': username,
+            'picture': None,
+            'url': None,
+        }
+
     def get_user(self, username):
         if username not in self.users and username:
             user = api.user.get(username=username)
-            fullname = user.getProperty('fullname')
-            if not fullname:
-                fullname = username
-            portrait = user.getPersonalPortrait(id=user.id)
-            user_info = {'fullname': fullname,
-                         'email': user.getProperty('email'),
-                         'username': username,
-                         'picture': portrait.absolute_url(),
-                         'url': '%s/authorwp/%s' % (self.navigation_root_url,
-                                                  username)}
+            if not user:
+                user_info = self.get_default_user(username)
+            else:
+                fullname = user.getProperty('fullname')
+                if not fullname:
+                    fullname = username
+                portrait = user.getPersonalPortrait(id=user.id)
+                user_info = {
+                    'fullname': fullname,
+                    'email': user.getProperty('email'),
+                    'username': username,
+                    'picture': portrait.absolute_url(),
+                    'url': '%s/authorwp/%s' % (self.navigation_root_url,
+                                               username),
+                }
             self.users[username] = user_info
         return self.users[username]
 
@@ -166,24 +180,25 @@ class BlogItemView(BrowserView):
                                                           self.request),
                                                   name="plone_portal_state")
         self.navigation_root_url = self.portal_state.navigation_root_url()
+        self.username = self.context.Creator()
+        self.user = api.user.get(username=self.username)
 
     def __call__(self):
         return self.template()
 
     def get_author_name(self):
-        username = self.context.Creator()
-        user = api.user.get(username=username)
-        name = user.getProperty('fullname')
+        if not self.user:
+            return self.username
+        name = self.user.getProperty('fullname')
         return name
 
     def get_author_url(self):
-        username = self.context.Creator()
-        return "{}/authorwp/{}".format(self.navigation_root_url, username)
+        return "{}/authorwp/{}".format(self.navigation_root_url, self.username)
 
     def get_author_picture(self):
-        username = self.context.Creator()
-        user = api.user.get(username=username)
-        return user.getPersonalPortrait(id=user.id).absolute_url()
+        if not self.user:
+            return None
+        return self.user.getPersonalPortrait(id=self.user.id).absolute_url()
 
     def get_datetime_human(self):
         if self.effdate:

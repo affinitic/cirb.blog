@@ -8,7 +8,8 @@
 <body>
 
 <metal:content-title fill-slot="content-title">
-    <img src="" class="portrait" tal:attributes="src view/get_author_picture" />
+    <img src="" class="portrait" tal:attributes="src view/get_author_picture"
+                                 tal:condition="view/user" />
     <h1 class="documentFirstHeading" tal:content="context/title"></h1>
     <div class="entry-meta" tal:condition="context/@@plone_portal_state/anonymous">
         <tal:block tal:condition='python:view.get_datetime_human()'>
@@ -19,7 +20,11 @@
         <span class="author vcard">
             <a class="url fn n" tal:attributes="href view/get_author_url; 
                                                 title string:${view/translated_view_by} ${view/get_author_name}" 
-               rel="author" tal:content="view/get_author_name">Benoît Suttor</a>
+               rel="author" tal:content="view/get_author_name"
+                            tal:condition="view/user">Benoît Suttor</a>
+            <span tal:content="view/username"
+                  tal:condition="not: view/user">
+            </span>
         </span>
     </div>
 </metal:content-title>
